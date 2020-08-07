@@ -12,14 +12,15 @@ from utils import ov_resp
 
 
 def create_app(config, env_config_file=False):
-    # create and configure the app
-    app = Flask(__name__)
-    app.config.from_object(config)
+    # create and configure the qiyi_app
+    qiyi_app = Flask(__name__)
+    qiyi_app.config.from_object(config)
 
     if env_config_file:
-        app.config.from_envvar('str', silent=True)
-
-    return app
+        qiyi_app.config.from_envvar('str', silent=True)
+    from commons.models import db
+    db.init_app(qiyi_app)
+    return qiyi_app
 
 
 app = create_app(myconfig.DevelopmentConfig)

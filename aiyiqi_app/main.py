@@ -1,6 +1,9 @@
-from flask import jsonify, render_template
+from flask import jsonify
 
 from aiyiqi_app import app
+
+
+
 
 
 @app.route('/')
@@ -13,10 +16,16 @@ def route_map():
         {rule.endpoint: rule.rule for rule in rules_iterator if rule.endpoint not in ('route_map', 'static')})
 
 
-
 def register_blueprint():
     from resources.movies import movie_bp
     app.register_blueprint(movie_bp)
 
 
+def create_thrid():
+    # mysql初始化
+    from models import db
+    db.init_app(app)
+
+
 register_blueprint()
+# create_thrid()
