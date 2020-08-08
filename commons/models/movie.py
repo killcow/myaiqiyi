@@ -11,7 +11,7 @@ class CategoryMovie(db.Model):
     title = db.Column(db.String(100), doc='二级分类名称')
     source = db.Column(db.String(100), doc='分类来源')
 
-    def __str__(self):
+    def __repr____(self):
         return '<CategoryMovie %s %s>' % (self.categroy, self.title)
 
 
@@ -26,5 +26,8 @@ class MovieTable(db.Model):
     imagepath = db.Column(db.String(2000), doc='图片地址')
     saveimagepath = db.Column(db.String(500), doc='图片本地保存地址')
     score = db.Column(db.Float, doc='评分')
-    status = db.Column(db.Integer, doc='评分')
+    status = db.Column(db.Integer, doc='状态')
     source = db.Column(db.String(10), doc='来源')
+
+    def __repr__(self):
+        return '<MovieTable %r>' % self.moviename

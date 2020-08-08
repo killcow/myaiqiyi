@@ -22,7 +22,7 @@ class ProductionConfig(DefaultConfig):
 
 class DevelopmentConfig(DefaultConfig):
     DEBUG = True
-    FLASK_ENV = 'development'
+    # FLASK_ENV = 'development'
 
 
 class TestingConfig(DefaultConfig):
