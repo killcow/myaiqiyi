@@ -11,7 +11,7 @@ class CategoryMovie(db.Model):
     title = db.Column(db.String(100), doc='二级分类名称')
     source = db.Column(db.String(100), doc='分类来源')
 
-    def __repr____(self):
+    def __repr__(self):
         return '<CategoryMovie %s %s>' % (self.categroy, self.title)
 
 
@@ -31,3 +31,31 @@ class MovieTable(db.Model):
 
     def __repr__(self):
         return '<MovieTable %r>' % self.moviename
+
+
+class MovieDetailTable(db.Model):
+    """电影详情"""
+    __tablename__ = 'moviedetailtable'
+
+    id = db.Column(db.Integer, primary_key=True, doc='电影id')
+    director = db.Column(db.String(100), doc='导演')
+    keyword = db.Column(db.String(500), doc='关键字')
+    categroy = db.Column(db.String(500), doc='类别')
+    des = db.Column(db.String(3000), doc='描述')
+    movie_pers = db.relationship('MoviePerformerTable', primaryjoin='MovieDetailTable.id==MoviePerformerTable.id',
+                                 backref='movie_detail')
+
+    def __repr__(self):
+        return '<MovieDetailTable %r>' % self.director
+
+
+class MoviePerformerTable(db.Model):
+    """电影里的演员"""
+    __tablename__ = 'movieperformertable'
+
+    id = db.Column(db.Integer, db.ForeignKey('moviedetailtable.id'), doc='演员id')
+    performer = db.Column(db.String(100), primary_key=True, doc = '演员名字')
+    role = db.Column(db.String(500), doc='扮演的角色')
+
+    def __repr__(self):
+        return '<MoviePerformerTable %r>' % self.performer
