@@ -269,7 +269,7 @@
                             <li class="qy-mod-li">
                                 <div class="qy-list-img vertical">
                                     <div class="qy-mod-link-wrap">
-                                        <a href="{{ url_for('moviePlay',playhtml=movie.url,movieid=movie.id ) }}"
+                                        <a href="{{ url_for('moviePlay',movieid=movie.id ) }}"
                                            vfrmrseat="" class="qy-mod-link" target="_blank">
                                             <div style="height: 100%; overflow: hidden;">
                                                 <div id="T-randomAni" class="qy-mod-cover"
@@ -340,7 +340,7 @@
                 {% for movie in movies %}
                     <div class="qy-video-info-tips2 type-list"
                          style="width: 250px; top: 450px; left: 310px; display: none;"><a
-                            href="{{ url_for('moviePlay',playhtml=movie.url,movieid=movie.id ) }}" target="_blank">
+                            href="{{ url_for('moviePlay',movieid=movie.id ) }}" target="_blank">
                         <div class="movie_tipHd">
                             <div class="movie_tipLink" style="height: 140px;"><img alt="{{ movie.moviename }}"
                                                                                    class="movie_img"

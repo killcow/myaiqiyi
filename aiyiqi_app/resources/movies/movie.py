@@ -1,10 +1,9 @@
-from flask import render_template, jsonify
+from flask import render_template
 from flask_restful import Resource, reqparse
 from sqlalchemy import text
-from sqlalchemy.exc import SQLAlchemyError
 
-from models.movie import CategoryMovie, MovieTable
 from models import db_session
+from models.movie import CategoryMovie, MovieTable
 
 
 class MovieList(Resource):
@@ -48,22 +47,32 @@ class MovieList(Resource):
 class MoviePlay(Resource):
     def get(self):
         rp = reqparse.RequestParser()
-        rp.add_argument('movieid', location='args', required=True)
+        rp.add_argument('movieid', location='args', default=858)
         rp.add_argument('playhtml', location='args')
         params = rp.parse_args()
         movie_id = params.movieid
 
-        movie_id = 858
+        # movie_id = 858
 
-        # stmt = text(
-        #     "SELECT md.id,mt.score,mt.moviename,md.director,group_concat(mp.performer) AS perman,group_concat(mp.role) AS perrole \
-        # FROM movietable AS mt INNER JOIN (moviedetailtable AS md,movieperformertable AS mp) ON \
-        # mt.id = md.id AND mt.id = mp.id AND md.id = mp.id \
-        # WHERE md.id =:x GROUP BY md.id")
-        #
-        # groups = db_session.execute(stmt, params={'x': movie_id}).first()
+        stmt = text(
+            "SELECT md.id,mt.moviename,mt.score,md.director,md.categroy,md.keyword,md.des,group_concat(mp.performer) AS perman,group_concat(mp.role) AS role \
+        FROM movietable AS mt INNER JOIN (moviedetailtable AS md,movieperformertable AS mp) ON \
+        mt.id = md.id AND mt.id = mp.id AND md.id = mp.id \
+        WHERE md.id =:x GROUP BY md.id")
 
-        return render_template('movieplay.html')
+        groups = db_session.execute(stmt, params={'x': movie_id}).first()
+
+        pers = groups[7].split(sep=',')
+        roles = groups[8].split(sep=',')
+        per_role = []
+        for i in range(len(pers)):
+            per_role.append({'per': pers[i], 'role': roles[i]})
+
+        movie_detail = {'movieid': groups[0], 'moviename': groups[1], 'score': groups[2], 'director': groups[3],
+                        'categroy': groups[4], 'keyword': groups[5], 'des': groups[6], 'per_role': per_role}
+
+        # return movie_detail
+        return render_template('movieplay.html', movie_detail=movie_detail)
 
 
 class ppp(Resource):
