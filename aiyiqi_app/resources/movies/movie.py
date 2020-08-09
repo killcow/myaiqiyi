@@ -3,7 +3,7 @@ from flask_restful import Resource, reqparse
 from sqlalchemy import text
 
 from models import db_session
-from models.movie import CategoryMovie, MovieTable
+from models.movie import CategoryMovie, MovieTable, PerformerDetailTable
 
 
 class MovieList(Resource):
@@ -47,7 +47,7 @@ class MovieList(Resource):
 class MoviePlay(Resource):
     def get(self):
         rp = reqparse.RequestParser()
-        rp.add_argument('movieid', location='args', default=858)
+        rp.add_argument('movieid', location='args', default=896)
         rp.add_argument('playhtml', location='args')
         params = rp.parse_args()
         movie_id = params.movieid
@@ -73,6 +73,19 @@ class MoviePlay(Resource):
 
         # return movie_detail
         return render_template('movieplay.html', movie_detail=movie_detail)
+
+
+class PerformerDetail(Resource):
+    """演员详情"""
+
+    def get(self):
+        rp = reqparse.RequestParser()
+        rp.add_argument('name', location='args', default='林家栋')
+        params = rp.parse_args()
+        name = params.name
+        performer = PerformerDetailTable.query.get(name)
+        # return render_template('performer_detail.html')
+        return render_template('performer_detail.html', performer=performer)
 
 
 class ppp(Resource):

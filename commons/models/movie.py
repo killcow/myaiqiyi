@@ -53,9 +53,37 @@ class MoviePerformerTable(db.Model):
     """电影里的演员"""
     __tablename__ = 'movieperformertable'
 
-    id = db.Column(db.Integer, db.ForeignKey('moviedetailtable.id'), doc='演员id')
-    performer = db.Column(db.String(100), primary_key=True, doc = '演员名字')
+    id = db.Column(db.Integer, db.ForeignKey('moviedetailtable.id'), doc='电影id')
+    performer = db.Column(db.String(100), primary_key=True, doc='演员名字')
     role = db.Column(db.String(500), doc='扮演的角色')
 
     def __repr__(self):
         return '<MoviePerformerTable %r>' % self.performer
+
+
+class PerformerDetailTable(db.Model):
+    """演员详情"""
+    __tablename__ = 'performerdetailtable'
+
+    name = db.Column(db.String(100), primary_key=True, unique=True, doc='演员名字')
+    e_name = db.Column(db.String(100), doc='演员英文名字')
+    alias = db.Column(db.String(200), doc='昵称')
+    sex = db.Column(db.String(10), doc='性别')
+    bloodtype = db.Column(db.String(5), doc='血型')
+    height = db.Column(db.String(10), doc='身高')
+    address = db.Column(db.String(500), doc='地址')
+    birthday = db.Column(db.String(50), doc='生日')
+    constellation = db.Column(db.String(500), doc='星座')
+    location = db.Column(db.String(200), doc='本地地址')
+    ResidentialAddress = db.Column(db.String(100), doc='详细地址')
+    school = db.Column(db.String(100), doc='')
+    BrokerageAgency = db.Column(db.String(200), doc='')
+    fameyear = db.Column(db.String(200), doc='')
+    hobby = db.Column(db.String(1000), doc='')
+    Occupation = db.Column(db.String(500), doc='职业')
+    weight = db.Column(db.String(200), doc='体重')
+    image = db.Column(db.String(1000), doc='头像')
+    des = db.Column(db.String(2000), doc='描述')
+
+    def __repr__(self):
+        return '<PerformerDetailTable %r>' % self.name
