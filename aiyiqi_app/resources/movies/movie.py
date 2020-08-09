@@ -52,7 +52,7 @@ class MoviePlay(Resource):
         params = rp.parse_args()
         movie_id = params.movieid
 
-        # movie_id = 858
+        movie_id = 896
 
         stmt = text(
             "SELECT md.id,mt.moviename,mt.score,md.director,md.categroy,md.keyword,md.des,group_concat(mp.performer) AS perman,group_concat(mp.role) AS role \
